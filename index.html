@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JN Web — Desarrollo Web Profesional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#060810;--bg2:#0c0e18;--card:#11131f;--border:#1e2035;
+      --accent:#2d8bff;--bright:#00c3ff;--text:#e8eaf6;--muted:#6070a0;
+      --fd:'Syne',sans-serif;--fm:'Space Mono',monospace;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--fd);line-height:1.6;overflow-x:hidden}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--accent);border-radius:4px}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:.9rem 5%;background:rgba(6,8,16,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .nav-logo{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+    .nav-logo img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+    .nav-logo-text{font-family:var(--fd);font-weight:800;font-size:1.1rem;color:var(--text)}
+    .nav-logo-text span{color:var(--accent)}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{font-family:var(--fm);font-size:.74rem;color:var(--muted);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:color .2s}
+    .nav-links a:hover{color:var(--bright)}
+
+    /* HERO */
+    #hero{min-height:100vh;display:flex;align-items:center;padding:8rem 5% 5rem;position:relative;overflow:hidden}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(45,139,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(45,139,255,.06) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%)}
+    .hero-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(45,139,255,.12) 0%,transparent 65%);top:50%;left:45%;transform:translate(-50%,-50%);pointer-events:none}
+    .hero-layout{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:4rem;align-items:center;width:100%}
+    .hero-tag{display:inline-block;font-family:var(--fm);font-size:.7rem;color:var(--bright);background:rgba(0,195,255,.07);border:1px solid rgba(0,195,255,.2);padding:.3rem .9rem;margin-bottom:1.5rem;letter-spacing:.12em;text-transform:uppercase;animation:fadeUp .6s ease both}
+    h1{font-size:clamp(2.8rem,7vw,6rem);font-weight:800;line-height:1.05;letter-spacing:-2px;animation:fadeUp .6s .1s ease both}
+    h1 .bright{color:var(--bright)}
+    .hero-sub{margin-top:1.5rem;font-family:var(--fm);font-size:.9rem;color:var(--muted);max-width:520px;line-height:1.9;animation:fadeUp .6s .2s ease both}
+    .hero-badges{display:flex;gap:2rem;flex-wrap:wrap;margin-top:2rem;animation:fadeUp .6s .25s ease both}
+    .hero-badge{display:flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.7rem;color:var(--muted)}
+    .hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block}
+    .hero-ctas{display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;animation:fadeUp .6s .3s ease both}
+    .hero-logo-big{animation:fadeUp .8s .4s ease both}
+    .hero-logo-big img{width:260px;height:260px;border-radius:50%;object-fit:cover;filter:drop-shadow(0 0 40px rgba(45,139,255,.35))}
+
+    .btn-primary{background:linear-gradient(135deg,var(--accent),var(--bright));color:#060810;padding:.85rem 2rem;font-family:var(--fm);font-size:.85rem;font-weight:700;text-decoration:none;border:none;cursor:pointer;letter-spacing:.05em;transition:transform .15s,box-shadow .15s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px))}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(45,139,255,.4)}
+    .btn-secondary{background:transparent;color:var(--text);padding:.85rem 2rem;font-family:var(--fm);font-size:.85rem;text-decoration:none;border:1px solid var(--border);cursor:pointer;letter-spacing:.05em;transition:border-color .2s,color .2s}
+    .btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* SECTIONS */
+    section{padding:6rem 5%}
+    .section-label{font-family:var(--fm);font-size:.7rem;color:var(--accent);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.75rem}
+    .section-title{font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:1rem}
+    .section-desc{font-family:var(--fm);color:var(--muted);max-width:540px;font-size:.88rem;line-height:1.9}
+
+    /* QUÉ HAGO */
+    #que-hago{background:var(--bg2);border-top:1px solid var(--border)}
+    .que-hago-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3.5rem}
+    .que-hago-items{display:flex;flex-direction:column;gap:1.5rem}
+    .que-item{display:flex;gap:1.25rem;align-items:flex-start;padding:1.25rem;border:1px solid var(--border);background:var(--card);transition:border-color .2s,transform .2s}
+    .que-item:hover{border-color:var(--accent);transform:translateX(4px)}
+    .que-icon{font-size:1.3rem;min-width:2.4rem;height:2.4rem;display:flex;align-items:center;justify-content:center;background:rgba(45,139,255,.08);border:1px solid rgba(45,139,255,.2)}
+    .que-item h3{font-size:1rem;font-weight:700;margin-bottom:.25rem}
+    .que-item p{font-family:var(--fm);font-size:.78rem;color:var(--muted);line-height:1.7}
+    .code-block{background:var(--card);border:1px solid var(--border);padding:2rem;font-family:var(--fm);font-size:.82rem;color:var(--muted);line-height:2}
+    .code-block::before{content:'● ● ●';display:block;color:var(--border);margin-bottom:1rem;letter-spacing:4px}
+    .ca{color:var(--bright)}.cb{color:var(--accent)}.cw{color:var(--text)}
+
+    /* SERVICIOS */
+    #servicios{border-top:1px solid var(--border)}
+    .servicios-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:3.5rem}
+    .servicio-card{background:var(--card);border:1px solid var(--border);padding:2rem;transition:border-color .2s,transform .2s;position:relative;overflow:hidden}
+    .servicio-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--bright));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+    .servicio-card:hover{border-color:rgba(45,139,255,.4);transform:translateY(-4px)}
+    .servicio-card:hover::after{transform:scaleX(1)}
+    .servicio-num{font-family:var(--fm);font-size:.7rem;color:var(--accent);margin-bottom:1rem}
+    .servicio-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.75rem}
+    .servicio-card p{font-family:var(--fm);font-size:.78rem;color:var(--muted);line-height:1.8}
+    .tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.25rem}
+    .tags span{font-family:var(--fm);font-size:.68rem;color:var(--bright);background:rgba(0,195,255,.06);border:1px solid rgba(0,195,255,.15);padding:.2rem .55rem}
+
+    /* EJEMPLOS */
+    #ejemplos{background:var(--bg2);border-top:1px solid var(--border)}
+    .ejemplos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-top:3.5rem}
+    .ejemplo-card{background:var(--card);border:1px solid var(--border);overflow:hidden;transition:border-color .2s,transform .2s}
+    .ejemplo-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+    .ej-thumb{width:100%;height:200px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);font-family:var(--fm);font-size:.72rem;color:var(--muted);text-align:center}
+    .t1{background:linear-gradient(135deg,#060d1a,#0a1f3a)}
+    .t2{background:linear-gradient(135deg,#080614,#130a2e)}
+    .t3{background:linear-gradient(135deg,#060a14,#0a1530)}
+    .ej-icon{font-size:2.5rem;display:block;margin-bottom:.5rem}
+    .ej-info{padding:1.5rem}
+    .ej-info h3{font-size:1rem;font-weight:700;margin-bottom:.4rem}
+    .ej-info p{font-family:var(--fm);font-size:.78rem;color:var(--muted)}
+    .ej-link{display:inline-block;margin-top:1rem;font-family:var(--fm);font-size:.75rem;color:var(--accent);text-decoration:none}
+    .ej-link:hover{color:var(--bright)}
+
+    /* SOBRE MÍ */
+    #sobre-mi{border-top:1px solid var(--border)}
+    .sobre-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:5rem;align-items:center;margin-top:3.5rem}
+    .sobre-logo{display:flex;justify-content:center}
+    .sobre-logo img{width:280px;height:280px;border-radius:50%;object-fit:cover;filter:drop-shadow(0 0 50px rgba(45,139,255,.3));transition:filter .3s}
+    .sobre-logo img:hover{filter:drop-shadow(0 0 70px rgba(0,195,255,.5))}
+    .sobre-texto p{font-family:var(--fm);font-size:.88rem;color:var(--muted);line-height:2;margin-bottom:1rem}
+    .skills{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:2rem}
+    .skill{font-family:var(--fm);font-size:.72rem;color:var(--text);background:var(--card);border:1px solid var(--border);padding:.35rem .8rem;transition:border-color .2s,color .2s}
+    .skill:hover{border-color:var(--accent);color:var(--bright)}
+
+    /* CONTACTO */
+    #contacto{background:var(--bg2);border-top:1px solid var(--border);text-align:center}
+    .social-links{display:flex;justify-content:center;gap:1.2rem;margin:2rem auto;flex-wrap:wrap}
+    .social-link{display:flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.76rem;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:.55rem 1.1rem;background:var(--card);transition:border-color .2s,color .2s,transform .15s}
+    .social-link:hover{border-color:var(--accent);color:var(--bright);transform:translateY(-2px)}
+    .social-link svg{width:15px;height:15px;fill:currentColor}
+    .contact-form{max-width:580px;margin:2.5rem auto 0;display:flex;flex-direction:column;gap:1rem;text-align:left}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .form-field{display:flex;flex-direction:column;gap:.4rem}
+    .form-field label{font-family:var(--fm);font-size:.7rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+    .form-field input,.form-field textarea{background:var(--card);border:1px solid var(--border);color:var(--text);font-family:var(--fm);font-size:.88rem;padding:.85rem 1rem;outline:none;transition:border-color .2s;resize:vertical}
+    .form-field input:focus,.form-field textarea:focus{border-color:var(--accent)}
+    .form-field textarea{min-height:130px}
+    .form-submit{margin-top:.5rem;text-align:center}
+
+    /* WHATSAPP */
+    .wa{position:fixed;bottom:2rem;right:2rem;width:56px;height:56px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.4);z-index:99;transition:transform .2s;animation:waPulse 2.5s ease-in-out infinite}
+    .wa:hover{transform:scale(1.1);animation:none}
+    .wa svg{width:28px;height:28px}
+    .wa-tip{position:absolute;right:70px;background:var(--card);border:1px solid var(--border);color:var(--text);font-family:var(--fm);font-size:.73rem;padding:.4rem .8rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+    .wa:hover .wa-tip{opacity:1}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--border);padding:2rem 5%;display:flex;justify-content:space-between;align-items:center;font-family:var(--fm);font-size:.73rem;color:var(--muted);flex-wrap:wrap;gap:1rem}
+    .footer-logo{display:flex;align-items:center;gap:.5rem}
+    .footer-logo img{width:28px;height:28px;border-radius:50%}
+    footer a{color:var(--accent);text-decoration:none}
+    footer a:hover{color:var(--bright)}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes waPulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.4)}50%{box-shadow:0 4px 40px rgba(37,211,102,.7)}}
+
+    @media(max-width:900px){
+      .hero-layout{grid-template-columns:1fr}
+      .hero-logo-big{display:none}
+      .que-hago-grid{grid-template-columns:1fr}
+      .sobre-grid{grid-template-columns:1fr}
+      .sobre-logo img{width:200px;height:200px}
+      .form-row{grid-template-columns:1fr}
+      .nav-links{display:none}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">
+    <img src="logo.png" alt="JN Web"/>
+    <span class="nav-logo-text"><span>JN</span> Web</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#que-hago">Qué hago</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#ejemplos">Proyectos</a></li>
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-layout">
+    <div class="hero-content">
+      <div class="hero-tag">&lt;/&gt; transformamos ideas en experiencias digitales</div>
+      <h1>Impulsa tu<br>negocio en<br><span class="bright">internet.</span></h1>
+      <p class="hero-sub">Creamos sitios web modernos, rápidos y adaptables a todos los dispositivos. De la idea al deploy.</p>
+      <div class="hero-badges">
+        <div class="hero-badge"><span class="dot"></span>Diseños modernos</div>
+        <div class="hero-badge"><span class="dot"></span>100% responsivos</div>
+        <div class="hero-badge"><span class="dot"></span>Rápidos y optimizados</div>
+        <div class="hero-badge"><span class="dot"></span>Código limpio</div>
+      </div>
+      <div class="hero-ctas">
+        <a href="#contacto" class="btn-primary">Solicitar proyecto →</a>
+        <a href="#servicios" class="btn-secondary">Ver servicios</a>
+      </div>
+    </div>
+    <div class="hero-logo-big">
+      <img src="logo.png" alt="JN Web"/>
+    </div>
+  </div>
+</section>
+
+<section id="que-hago">
+  <div class="section-label">// 01 · qué hago</div>
+  <h2 class="section-title">Sitios que generan<br>resultados reales.</h2>
+  <div class="que-hago-grid">
+    <div class="que-hago-items">
+      <div class="que-item"><div class="que-icon">🎨</div><div><h3>Diseño moderno</h3><p>Interfaces atractivas, intuitivas y fáciles de usar. Tu sitio causa una primera impresión que convierte.</p></div></div>
+      <div class="que-item"><div class="que-icon">📱</div><div><h3>100% adaptable</h3><p>Tu sitio se ve perfecto en cualquier dispositivo: celular, tablet o escritorio. Sin excepciones.</p></div></div>
+      <div class="que-item"><div class="que-icon">⚡</div><div><h3>Rendimiento real</h3><p>Páginas rápidas para una mejor experiencia y mejor posicionamiento en Google.</p></div></div>
+    </div>
+    <div class="code-block">
+      <span class="ca">const</span> <span class="cw">jnweb</span> = {<br>
+      &nbsp;&nbsp;<span class="cb">nombre</span>: <span class="ca">'JN Web'</span>,<br>
+      &nbsp;&nbsp;<span class="cb">servicio</span>: <span class="ca">'Desarrollo Web'</span>,<br>
+      &nbsp;&nbsp;<span class="cb">responsive</span>: <span class="ca">true</span>,<br>
+      &nbsp;&nbsp;<span class="cb">rendimiento</span>: <span class="ca">'máximo'</span>,<br>
+      &nbsp;&nbsp;<span class="cb">disponible</span>: <span class="ca">true</span>,<br>
+      };<br><br>
+      <span class="ca">export default</span> jnweb;
+    </div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="section-label">// 02 · servicios</div>
+  <h2 class="section-title">¿En qué te podemos<br>ayudar?</h2>
+  <p class="section-desc">Trabajamos con emprendedores, negocios locales y empresas que quieren crecer en internet.</p>
+  <div class="servicios-grid">
+    <div class="servicio-card"><div class="servicio-num">01 /</div><h3>Landing Pages</h3><p>Páginas diseñadas para convertir visitas en clientes. Rápidas, atractivas y optimizadas para SEO.</p><div class="tags"><span>SEO</span><span>Responsive</span><span>Conversión</span></div></div>
+    <div class="servicio-card"><div class="servicio-num">02 /</div><h3>Sitios Corporativos</h3><p>Presencia online profesional para tu empresa. Transmitís confianza y credibilidad desde el primer clic.</p><div class="tags"><span>Diseño</span><span>CMS</span><span>Performance</span></div></div>
+    <div class="servicio-card"><div class="servicio-num">03 /</div><h3>Tiendas Online</h3><p>Vendé tus productos las 24 hs. Integración con MercadoPago, carrito y panel de administración.</p><div class="tags"><span>E-commerce</span><span>MercadoPago</span><span>Admin</span></div></div>
+    <div class="servicio-card"><div class="servicio-num">04 /</div><h3>Aplicaciones Web</h3><p>Sistemas a medida para automatizar tu negocio. Desde dashboards hasta plataformas completas.</p><div class="tags"><span>React</span><span>Node.js</span><span>Full Stack</span></div></div>
+  </div>
+</section>
+
+<section id="ejemplos">
+  <div class="section-label">// 03 · proyectos</div>
+  <h2 class="section-title">Trabajo<br>que habla solo.</h2>
+  <p class="section-desc">Algunos proyectos recientes. Reemplazá las miniaturas con capturas reales de tu trabajo.</p>
+  <div class="ejemplos-grid">
+    <div class="ejemplo-card"><div class="ej-thumb t1"><div><span class="ej-icon">🛒</span><span>Tu imagen aquí</span></div></div><div class="ej-info"><h3>E-commerce para marca local</h3><p>Tienda online completa con carrito, pagos y panel de admin. Integración con MercadoPago.</p><a href="#" class="ej-link">Ver proyecto →</a></div></div>
+    <div class="ejemplo-card"><div class="ej-thumb t2"><div><span class="ej-icon">🏢</span><span>Tu imagen aquí</span></div></div><div class="ej-info"><h3>Sitio corporativo</h3><p>Presencia digital profesional para empresa del sector servicios. Diseño moderno y carga ultrarrápida.</p><a href="#" class="ej-link">Ver proyecto →</a></div></div>
+    <div class="ejemplo-card"><div class="ej-thumb t3"><div><span class="ej-icon">📱</span><span>Tu imagen aquí</span></div></div><div class="ej-info"><h3>Landing page de conversión</h3><p>Página diseñada para captar leads con formulario integrado, SEO optimizado y velocidad máxima.</p><a href="#" class="ej-link">Ver proyecto →</a></div></div>
+  </div>
+</section>
+
+<section id="sobre-mi">
+  <div class="section-label">// 04 · sobre mí</div>
+  <div class="sobre-grid">
+    <div class="sobre-logo"><img src="logo.png" alt="JN Web"/></div>
+    <div class="sobre-texto">
+      <h2 class="section-title">Hola, somos<br><span style="color:var(--bright)">JN Web.</span></h2>
+      <p>Somos un equipo de desarrollo web apasionado por crear experiencias digitales que realmente funcionen. Nos especializamos en sitios modernos, rápidos y adaptados a cada cliente.</p>
+      <p>Trabajamos con emprendedores, negocios locales y empresas que quieren dar el salto digital sin complicaciones. Nos encargamos de todo: desde el diseño hasta el lanzamiento.</p>
+      <p>Creemos que un buen sitio web no es solo bonito — tiene que generar resultados. Por eso cada proyecto lo pensamos con foco en la experiencia del usuario y los objetivos del negocio.</p>
+      <div class="skills">
+        <span class="skill">HTML / CSS</span><span class="skill">JavaScript</span><span class="skill">React</span>
+        <span class="skill">Node.js</span><span class="skill">WordPress</span><span class="skill">SEO</span>
+        <span class="skill">MercadoPago</span><span class="skill">Responsive</span><span class="skill">Figma</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="section-label">// 05 · contacto</div>
+  <h2 class="section-title">¿Arrancamos?</h2>
+  <p class="section-desc" style="margin:0 auto 0">Contanos tu proyecto y te respondemos en menos de 24 hs. Sin vueltas.</p>
+  <div class="social-links">
+    <a href="https://facebook.com/jnweb" target="_blank" class="social-link">
+      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      Facebook · JN web
+    </a>
+    <a href="https://instagram.com/jnweb" target="_blank" class="social-link">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      Instagram · JN web
+    </a>
+    <a href="https://tiktok.com/@jnweb" target="_blank" class="social-link">
+      <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+      TikTok · JN web
+    </a>
+  </div>
+  <form class="contact-form" onsubmit="handleSubmit(event)">
+    <div class="form-row">
+      <div class="form-field"><label>Nombre</label><input type="text" placeholder="Tu nombre" required/></div>
+      <div class="form-field"><label>Email</label><input type="email" placeholder="jony.antivero@gmail.com" required/></div>
+    </div>
+    <div class="form-field"><label>¿Qué necesitás?</label><input type="text" placeholder="Landing page, tienda online, app..."/></div>
+    <div class="form-field"><label>Contanos más</label><textarea placeholder="Describí tu proyecto o simplemente saludá..." required></textarea></div>
+    <div class="form-submit"><button type="submit" class="btn-primary">Enviar mensaje →</button></div>
+  </form>
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <img src="logo.png" alt="JN Web"/>
+    <span>© 2025 JN Web · Desarrollo Web Profesional</span>
+  </div>
+  <span>
+    <a href="https://facebook.com/jnweb" target="_blank">Facebook</a> &nbsp;·&nbsp;
+    <a href="https://instagram.com/jnweb" target="_blank">Instagram</a> &nbsp;·&nbsp;
+    <a href="https://tiktok.com/@jnweb" target="_blank">TikTok</a>
+  </span>
+</footer>
+
+<a href="https://wa.me/573151123003?text=Hola!%20Vi%20la%20p%C3%A1gina%20de%20JN%20Web%20y%20quiero%20consultar%20por%20un%20proyecto." target="_blank" class="wa" aria-label="WhatsApp">
+  <div class="wa-tip">¡Hablemos! 💬</div>
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  const secs=document.querySelectorAll('section[id]');
+  const navAs=document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll',()=>{
+    let cur='';
+    secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id});
+    navAs.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+cur?'var(--bright)':''});
+  });
+  function handleSubmit(e){
+    e.preventDefault();
+    const btn=e.target.querySelector('button[type="submit"]');
+    btn.textContent='✓ Mensaje enviado';
+    btn.style.background='#25d366';
+    btn.style.color='#fff';
+  }
+</script>
+</body>
+</html>
