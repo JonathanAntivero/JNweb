@@ -157,6 +157,26 @@
         display: block; 
       } 
     }
+
+     /* - TESTIMONIOS - */
+            #testimonios { background: var(--cream); padding: 5rem 6vw; }
+            .testi-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit minmax(270px, 1fr));
+                gap: 1.8rem; 
+            }
+            .testi-card {
+                background: var(--cream-light);
+                border-left: 4px solid var(--gold);
+                padding: 1.8rem 1.5rem; border-radius: 0 6px 6px 0;
+            }
+            .testi-text {
+                font-size: .97rem; color: var(--text-mid);
+                line-height: 1.7; font-style: italic; margin-bottom: 1rem;
+            }
+            .testi-author { font-weight: 700; color: var(--wood-dark); font-size: .88rem; }
+            .testi-stars { color: var(--gold); letter-spacing: .1em; font-size: .9rem; }
+
   </style>
 </head>
 <body>
@@ -171,6 +191,7 @@
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#ejemplos">Proyectos</a></li>
     <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#testimonios">Testimonios</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
 </nav>
@@ -264,6 +285,34 @@
     </div>
   </div>
 </section>
+
+<!-- TESTIMONIOS -->
+              <section id="testimonios">
+                <div class="divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-icon">💬</div>
+                    <div class="divider-line"></div>
+                </div>
+                <h2 class="section-title reveal">Lo que dicen los clientes</h2>
+                <p class="section-subtitle reveal">La satisfacción de cada cliente es nuestra prioridad.</p>
+                <div class="testi-grid">
+                    <div class="testi-card reveal">
+                        <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+                        <p class="testi-text">"Quedó buenísima la pagína, y el precio es re accesible."</p>
+                        <div class="testi-author">-Martín S., Junín, Bs.As</div>
+                    </div>
+                    <div class="testi-card reveal">
+                        <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+                        <p class="testi-text">"El catálogo está re lindo; los colores, el diseño, todo así está muy lindo."</p>
+                        <div class="testi-author">-Romina R., Capilla del Señor, Bs.As</div>
+                    </div>
+                    <div class="testi-card reveal">
+                        <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+                        <div class="testi-text">". La tienda virtual quedó perfecta, es como tener otro negocio pero sin pagar alquiler, servicios ni quien la atienda! Me encanta."</div>
+                        <div class="testi-author">-Claudia R., Bs.As</div>
+                    </div>
+                </div>
+              </section>
 
 <section id="contacto">
   <div class="section-label">// 05 · contacto</div>
