@@ -264,7 +264,8 @@
     <div class="ejemplo-card"><div class="ej-thumb t2"><img src="caneladorada.jpeg" alt="Restaurante en Bogotá"></div><div class="ej-info"><h3>Restaurante en Bogotá</h3><p>Presencia digital. Diseño elegante y moderno. Ubicación, mapa, número telefónico, y formulario para reservación.</p><a href="https://la-canela-dorada.vercel.app" target="_blank" class="ej-link">Ver proyecto →</a></div></div>
     <div class="ejemplo-card"><div class="ej-thumb t3"><img src="carpinteriamartinImagen.png" alt="Carpinteria Martín"></div><div class="ej-info"><h3>Landing page para oficios</h3><p>Página diseñada para atraer clientes, con formulario integrado, botón de whatsapp, mapa de ubicación del taller y podría incluir enlace a redes sociales.</p><a href="https://jonathanantivero.github.io/Carpinteria-Martin" target="_blank" class="ej-link">Ver proyecto →</a></div></div>
     <div class="ejemplo-card"><div class="ej-thumb t4"><img src="modabogota.png" alt="Tienda de ropa"></div><div class="ej-info"><h3>Tienda de ropa</h3><p>Galeria de fotos con descipción y precio de cada prenda. Telefono+botón de whatsapp, dirección de tienda y mapa vitual, horario de atención</p><a href="https://jonathanantivero.github.io/ModaBogota/" target="_blank" class="ej-link">Ver proyecto →</a></div></div>
-    <div class="ejemplo-card"><div class="ej-thumb t5"><img src="imgbarberia.jpeg" alt="Barbería Elite"></div><div class="ej-info"><h3>Barbería</h3><p>Diseño simple. Ubicación+mapa, número telefónico*botón de whatsapp directo, horarios de atención.</p><a href="https://barberia-elite-three.vercel.app" target="_blank" class="ej-link">Ver proyecto →</a></div></div>
+    <div class="ejemplo-card"><div class="ej-thumb t5"><img src="imgbarberia.jpeg" alt="Barbería Elite"></div><div class="ej-info"><h3>Barbería</h3><p>Diseño simple. Ubicación+mapa, número telefónico+botón de whatsapp directo, horarios de atención.</p><a href="https://barberia-elite-three.vercel.app" target="_blank" class="ej-link">Ver proyecto →</a></div></div>
+    <div class="ejemplo-card"><div class="ej-thumb t6"><img src="oasisfoto.png" alt="Habitat-Oasis"></div><div class="ej-info"><h3>Mantenimiento de jardínes</h3><p>Diseño ideal, galería de fotos, sección "nosotros", sección "¿por que contratarnos?", botón de whatsapp.</p><a href="https://habitat-oasis.vercel.app" target="_blank" class="ej-link">Ver proyecto →</a></div></div>
   </div>
 </section>
 
@@ -298,7 +299,7 @@
                 <div class="testi-grid">
                     <div class="testi-card reveal">
                         <div class="testi-stars">⭐⭐⭐⭐⭐</div>
-                        <p class="testi-text">"Quedó buenísima la pagína, y el precio es re accesible."</p>
+                        <p class="testi-text">"Quedó buenísima la pagína, y el precio es muy accesible."</p>
                         <div class="testi-author">-Martín S., Junín, Bs.As</div>
                     </div>
                     <div class="testi-card reveal">
@@ -308,8 +309,8 @@
                     </div>
                     <div class="testi-card reveal">
                         <div class="testi-stars">⭐⭐⭐⭐⭐</div>
-                        <div class="testi-text">". La tienda virtual quedó perfecta, es como tener otro negocio pero sin pagar alquiler, servicios ni quien la atienda! Me encanta."</div>
-                        <div class="testi-author">-Claudia R., Bs.As</div>
+                        <div class="testi-text">"Quedó excelente la página."</div>
+                        <div class="testi-author">-Maximiliano, Bogotá, Colombia</div>
                     </div>
                 </div>
               </section>
@@ -333,6 +334,7 @@
     </a>
   </div>
   <form class="contact-form" onsubmit="handleSubmit(event)">
+    <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
     <div class="form-row">
       <div class="form-field"><label>Nombre</label><input type="text" name="name" placeholder="Tu nombre" required/></div>
       <div class="form-field"><label>Email</label><input type="email" name="email" placeholder="Tu email" required/></div>
@@ -370,6 +372,11 @@
   });
   function handleSubmit(e) {
     e.preventDefault();
+    // Honeypot: si el bot completó este campo, no se va a enviar nada 
+    const honeypot = e.target.querySelector('[name="website"]');
+    if (honeypot && honeypot.value !==''){
+      return;
+    }
     const btn = e.target.querySelector('button[type="submit"]');
     emailjs.sendForm('service_xk5twd7', 'template_tfot3wt', e.target)
       .then(() => {
