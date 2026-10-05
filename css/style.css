@@ -1,7 +1,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#060810;--bg2:#0c0e18;--card:#11131f;--border:#1e2035;
-  --accent:#2d8bff;--bright:#00c3ff;--text:#e8eaf6;--muted:#6070a0;
+  --bg:#060810;--bg2:#0c0e18;--card:#1f2233;--border:#1e2035;
+  --accent:#2d8bff;--bright:#00c3ff;--text:#e8eaf6;--muted:#c7cddf;
   --fd:'Space Grotesk',sans-serif;--fm:'Space Mono',monospace;
 }
 html{scroll-behavior:smooth}
